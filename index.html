@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fresh Foods</title>
+    <link rel="icon" href="img/icons.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <header class="header">
+        <div class="container header-top">
+            <div class="logo">
+                <img src="img/icons.png" alt=""> 
+                <h2><a href="#">Fresh Foods</a></h2>
+            </div>
+            <div class="search-bar">
+                <select><option>All Categories</option></select>
+                <input type="text" placeholder="Search Products...">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+            <div class="header-actions">
+                <a href="#"><i class="fas fa-user"></i></a>
+                <a href="#"><i class="fas fa-shopping-cart"></i> <span class="cart-total">$0.00</span></a>
+            </div>
+        </div>
+        <nav class="main-nav container">
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+            </ul>
+            <div class="contact-info">
+                Call Us 24/7: <strong>+7 123 456 7890</strong>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="container hero-content">
+            <div class="hero-text">
+                <p class="subtitle">100% healthy and affordable</p>
+                <h1>Organic products</h1>
+                <p>Small changes big difference</p>
+                <a href="#" class="btn btn-primary">Shop Now</a>
+            </div>
+            <div class="hero-image">
+                <img src="img/image.png" alt="Healthy Food">
+            </div>
+        </div>
+    </section>
+
+    <section class="categories container">
+        <div class="category-item"><i class="fas fa-apple-alt"></i> Fruits</div>
+        <div class="category-item active"><i class="fas fa-carrot"></i> Vegetables</div>
+        <div class="category-item"><i class="fas fa-drumstick-bite"></i> Meat</div>
+        <div class="category-item"><i class="fas fa-fish"></i> Seafood</div>
+        <div class="category-item"><i class="fas fa-cheese"></i> Dairy</div>
+    </section>
+
+    <section class="products-section container">
+        <h2 class="section-title">Featured Products</h2>
+        <div class="product-grid">
+            <div class="product-card">
+                <span class="badge sale">Sale</span>
+                <img src="https://placehold.co/150x150?text=Oranges" alt="Orange">
+                <p class="category">Fruits</p>
+                <h3>Oranges - 1kg</h3>
+                <div class="price">
+                    <span class="current">120₽</span> <span class="old">170₽</span>
+                </div>
+            </div>
+            <div class="product-card card-hover">
+                <img src="https://placehold.co/150x150?text=Meat" alt="Meat">
+                <h3>Chicken - 1kg</h3>
+                <div class="price"><span class="current">599₽</span></div>
+            </div>
+            <div class="product-card">
+                <span class="badge new">New</span>
+                <img src="https://placehold.co/150x150?text=Eggs" alt="Eggs">
+                <p class="category">Dairy</p>
+                <h3>Eggs - 1 Dozen</h3>
+                <div class="price"><span class="current">100₽</span></div>
+            </div>
+            <div class="product-card">
+                <img src="https://placehold.co/150x150?text=Potatoes" alt="Potatoes">
+                <p class="category">Vegetables</p>
+                <h3>Potatoes - 1kg</h3>
+                <div class="price"><span class="current">89,99₽</span></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="promo-banner container">
+        <div class="banner-content">
+            <h2>SAVE UP TO 20%<br>Organic Foods</h2>
+            <p>Start your daily shopping with some Organic Foods.</p>
+            <a href="#" class="btn btn-primary">Shop Now</a>
+        </div>
+    </section>
+
+    <section class="features-strip">
+        <div class="container features-grid">
+            <div class="feature"><i class="fas fa-truck"></i> <div><h4>Free Shipping</h4><p>On order over $100</p></div></div>
+            <div class="feature"><i class="fas fa-sync"></i> <div><h4>Money Return</h4><p>30 days money return</p></div></div>
+            <div class="feature"><i class="fas fa-headset"></i> <div><h4>Support 24/7</h4><p>Customer support</p></div></div>
+            <div class="feature"><i class="fas fa-lock"></i> <div><h4>Safe Payment</h4><p>100% secure payment</p></div></div>
+        </div>
+    </section>
+
+    <section class="testimonials container">
+    <h2 class="section-title">What Our Customers Say</h2>
+    <div class="testimonial-slider">
+        <div class="testimonial-card">
+            <p>"Fresh and organic! The delivery was super fast and the quality of fruits is unmatched."</p>
+            <div class="author">
+                <img src="img/photo_5267322178305199176_m.jpg" alt="Customer">
+                <span>Jane Doe</span>
+            </div>
+        </div>
+        </div>
+</section>
+
+<section class="subscribe container">
+    <div class="subscribe-card">
+        <div class="subscribe-content">
+            <p class="sub-label">To get discounts and latest updates</p>
+            <h2 class="sub-title">Subscribe Us</h2>
+        </div>
+        
+        <form class="subscribe-form">
+            <input type="email" placeholder="Enter your email address" required>
+            <button type="submit" class="subscribe-btn">
+                <i class="fas fa-paper-plane"></i> </button>
+        </form>
+    </div>
+</section>
+
+    <footer class="footer">
+        <div class="container footer-grid">
+            <div>
+                <h4>Quick Links</h4>
+                <ul><li><a href="#">Home</a></li><li><a href="#">Shop</a></li><li><a href="#">About Us</a></li></ul>
+            </div>
+            <div>
+                <h4>Information</h4>
+                <ul><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms & Conditions</a></li></ul>
+            </div>
+            <div>
+                <h4>Categories</h4>
+                <ul><li><a href="#">Fresh Fruits</a></li><li><a href="#">Vegetables</a></li><li><a href="#">Meat</a></li></ul>
+            </div>
+            <div>
+                <h4>About Store</h4>
+                <p><i class="fas fa-map-marker-alt"></i> 123 Street, City, Country</p>
+                <p><i class="fas fa-phone"></i> +7 123 456 7890</p>
+                <p><i class="fas fa-envelope"></i> email@example.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>Copyright © 2026 Fresh Foods. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
