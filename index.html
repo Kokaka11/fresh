@@ -9,21 +9,22 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-
+<script>
+    // Проверяем, есть ли ID пользователя
+    if (!localStorage.getItem('userId')) {
+        // Если ID нет, отправляем на страницу авторизации
+        window.location.href = 'profile.html';
+    }
+</script>
     <header class="header">
         <div class="container header-top">
             <div class="logo">
                 <img src="img/icons.png" alt=""> 
                 <h2><a href="#">Fresh Foods</a></h2>
             </div>
-            <div class="search-bar">
-                <select><option>All Categories</option></select>
-                <input type="text" placeholder="Search Products...">
-                <button><i class="fas fa-search"></i></button>
-            </div>
             <div class="header-actions">
-                <a href="#"><i class="fas fa-user"></i></a>
-                <a href="#"><i class="fas fa-shopping-cart"></i> <span class="cart-total">$0.00</span></a>
+                <a href="profile.html"><i class="fas fa-user"></i></a>
+                <a href="cart.html"><i class="fas fa-shopping-cart"></i> <span class="cart-total">₽0.00</span></a>
             </div>
         </div>
         <nav class="main-nav container">
@@ -43,7 +44,7 @@
                 <p class="subtitle">100% healthy and affordable</p>
                 <h1>Organic products</h1>
                 <p>Small changes big difference</p>
-                <a href="#" class="btn btn-primary">Shop Now</a>
+                <a href="products.html" class="btn btn-primary">Shop Now</a>
             </div>
             <div class="hero-image">
                 <img src="img/image.png" alt="Healthy Food">
@@ -73,6 +74,7 @@
             </div>
             <div class="product-card card-hover">
                 <img src="img/chicken.png" alt="Meat">
+                <p class="category">Meats</p>
                 <h3>Chicken - 1kg</h3>
                 <div class="price"><span class="current">599₽</span></div>
             </div>
@@ -102,7 +104,7 @@
 
     <section class="features-strip">
         <div class="container features-grid">
-            <div class="feature"><i class="fas fa-truck"></i> <div><h4>Free Shipping</h4><p>On order over $100</p></div></div>
+            <div class="feature"><i class="fas fa-truck"></i> <div><h4>Free Shipping</h4><p>On order over ₽100</p></div></div>
             <div class="feature"><i class="fas fa-sync"></i> <div><h4>Money Return</h4><p>30 days money return</p></div></div>
             <div class="feature"><i class="fas fa-headset"></i> <div><h4>Support 24/7</h4><p>Customer support</p></div></div>
             <div class="feature"><i class="fas fa-lock"></i> <div><h4>Safe Payment</h4><p>100% secure payment</p></div></div>

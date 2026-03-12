@@ -582,6 +582,167 @@ a {
     font-weight: 500;
 }
 
+/* Общие контейнеры */
+.cart-page, .profile-page {
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: 30px;
+    margin-top: 50px;
+    align-items: start;
+}
+
+/* Стили корзины */
+.cart-item {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.cart-item img { border-radius: 10px; margin-right: 20px; }
+
+.item-info { flex-grow: 1; }
+
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin: 0 30px;
+}
+
+.quantity-controls button {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid #ddd;
+    background: #fff;
+    cursor: pointer;
+}
+
+.cart-summary {
+    background: #f9f9f9;
+    padding: 30px;
+    border-radius: 20px;
+    position: sticky;
+    top: 20px;
+}
+
+.checkout-btn {
+    width: 100%;
+    padding: 15px;
+    background: #00b853;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-weight: bold;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+/* Стили профиля */
+.user-avatar {
+    width: 80px;
+    height: 80px;
+    background: #e0f5e9;
+    color: #00b853;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0 auto 15px;
+}
+
+.profile-menu a {
+    display: block;
+    padding: 12px 0;
+    text-decoration: none;
+    color: #555;
+    border-bottom: 1px solid #eee;
+}
+
+.profile-menu a.active { color: #00b853; font-weight: bold; }
+
+.order-card {
+    background: #fff;
+    border: 1px solid #eee;
+    padding: 20px;
+    border-radius: 12px;
+    margin-top: 20px;
+}
+
+.order-status.delivered {
+    color: #00b853;
+    background: #eafff2;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+}
+
+.auth-card {
+    background: white;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 350px;
+    text-align: center;
+}
+
+.auth-card h2 {
+    margin-bottom: 25px;
+    color: #333;
+}
+
+.auth-wrapper {
+    display: flex;
+    justify-content: center; /* Центрирует по горизонтали */
+    align-items: center;     /* Центрирует по вертикали */
+    min-height: 100vh;       /* Высота на весь экран */
+    width: 100%;             /* Ширина на весь экран */
+}
+
+.auth-card {
+    background: white;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    width: 350px;
+    text-align: center;
+}
+
+/* Поле ввода */
+input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-sizing: border-box; /* Чтобы padding не ломал ширину */
+    font-size: 16px;
+}
+
+/* Кнопка */
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #27ae60; /* Фирменный зеленый */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background-color: #219150;
+}
+
 /* Адаптивность для мобилок */
 @media (max-width: 768px) {
     .subscribe-card {
