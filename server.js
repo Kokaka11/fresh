@@ -46,7 +46,7 @@ app.post('/api/cart/add', async (req, res) => {
 
 // Эндпоинт для авторизации (нужен для работы входа)
 app.post('/api/auth', async (req, res) => {
-    const { phone } = req.body;
+    let { phone } = req.body;
     // Убираем возможные пробелы и приводим к строке
     phone = String(phone).trim(); 
     
