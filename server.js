@@ -1,9 +1,10 @@
+// подключении к бд
 const express = require('express');
 const { Pool } = require('pg');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 
-const app = express(); // Создаем экземпляр приложения один раз
+const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -12,42 +13,19 @@ app.use(express.static('public'));
 const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
-    database: 'fresh', // Убедись, что база называется именно так
+    database: 'fresh', 
     password: '2613346ko', 
     port: 5432,
 });
+// подключении к бд
 
-// Эндпоинт для добавления (тот самый, на котором была ошибка)
-app.post('/api/cart/add', async (req, res) => {
-    const { userId, productId, quantity } = req.body;
-    try {
-        const existingItem = await pool.query(
-            'SELECT * FROM cart_items WHERE user_id = $1 AND product_id = $2',
-            [userId, productId]
-        );
-
-        if (existingItem.rows.length > 0) {
-            await pool.query(
-                'UPDATE cart_items SET quantity = quantity + $1 WHERE user_id = $2 AND product_id = $3',
-                [quantity, userId, productId]
-            );
-        } else {
-            await pool.query(
-                'INSERT INTO cart_items (user_id, product_id, quantity) VALUES ($1, $2, $3)',
-                [userId, productId, quantity]
-            );
-        }
-        res.status(200).send('Добавлено в базу!');
-    } catch (err) {
-        console.error(err);
-        res.status(500).send('Ошибка БД');
-    }
-});
-
-// Эндпоинт для авторизации (нужен для работы входа)
+//авторизации (нужен для работы входа)
 app.post('/api/auth', async (req, res) => {
     let { phone } = req.body;
-    // Убираем возможные пробелы и приводим к строке
+    
+    if (!phone) {
+        return res.status(400).send('Номер телефона обязателен');
+    }
     phone = String(phone).trim(); 
     
     try {
@@ -73,52 +51,18 @@ app.post('/api/auth', async (req, res) => {
     }
 });
 
-const PORT = 3000;
-app.listen(PORT, () => {
-    console.log(`Сервер летит на http://localhost:${PORT}`);
-});
-
-// Эндпоинт для добавления товара в корзину
-app.post('/api/cart/add', async (req, res) => {
-    const { userId, productId, quantity } = req.body;
-    try {
-        // Проверяем, есть ли уже такой товар у пользователя
-        const existingItem = await pool.query(
-            'SELECT * FROM cart_items WHERE user_id = $1 AND product_id = $2',
-            [userId, productId]
-        );
-
-        if (existingItem.rows.length > 0) {
-            // Если есть — увеличиваем количество
-            await pool.query(
-                'UPDATE cart_items SET quantity = quantity + $1 WHERE user_id = $2 AND product_id = $3',
-                [quantity, userId, productId]
-            );
-        } else {
-            // Если нет — добавляем новую запись
-            await pool.query(
-                'INSERT INTO cart_items (user_id, product_id, quantity) VALUES ($1, $2, $3)',
-                [userId, productId, quantity]
-            );
-        }
-        res.status(200).send('Добавлено');
-    } catch (err) {
-        console.error(err);
-        res.status(500).send('Ошибка БД');
-    }
-});
-
+// создание и проверка номера телефона
 app.post('/api/auth', async (req, res) => {
     const { phone } = req.body;
     try {
-        // Ищем пользователя по телефону
+
         const result = await pool.query('SELECT * FROM users WHERE phone = $1', [phone]);
         
         if (result.rows.length > 0) {
-            // Пользователь найден — просто возвращаем его данные
+
             res.json(result.rows[0]);
         } else {
-            // Пользователь новый — создаем
+
             const newUser = await pool.query(
                 'INSERT INTO users (phone) VALUES ($1) RETURNING *', 
                 [phone]
@@ -130,6 +74,24 @@ app.post('/api/auth', async (req, res) => {
     }
 });
 
+// Получение данных пользователя по ID
+app.get('/api/user/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const result = await pool.query('SELECT phone FROM users WHERE id = $1', [id]);
+        
+        if (result.rows.length > 0) {
+            res.json(result.rows[0]);
+        } else {
+            res.status(404).send('Пользователь не найден');
+        }
+    } catch (err) {
+        res.status(500).send('Ошибка сервера');
+    }
+});
+
+
+
 app.get('/api/cart/:userId', async (req, res) => {
     const { userId } = req.params;
     const result = await pool.query(
@@ -137,4 +99,10 @@ app.get('/api/cart/:userId', async (req, res) => {
         [userId]
     );
     res.json(result.rows);
+});
+
+
+const PORT = 3000;
+app.listen(PORT, () => {
+    console.log(`Сервер летит на http://localhost:${PORT}`);
 });

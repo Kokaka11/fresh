@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fresh Foods</title>
+    <link rel="icon" href="img/icons.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+   <div class="auth-wrapper">
+        <div class="auth-card">
+            <h2>Авторизация</h2>
+            
+            <form onsubmit="login(event)">
+                <input type="tel" id="phone" placeholder="+7 (___) ___-__-__" required>
+                <button type="submit" class="reg-button">Войти</button>
+            </form>
+            
+            <div id="error-message" style="color: red; margin-top: 10px; font-size: 14px;"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

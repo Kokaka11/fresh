@@ -2,28 +2,59 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fresh Foods</title>
-    <link rel="icon" href="img/icons.png">
+    <title>Fresh Foods - Профиль</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
-    <script>
-    // Если пользователь УЖЕ залогинен, не показываем ему форму, а отправляем на главную
-    if (localStorage.getItem('userId')) {
-        window.location.href = 'index.html';
-    }
-    </script>
-
-    <div class="auth-wrapper">
-        <div class="auth-card">
-            <h2>Авторизация</h2>
-            <input type="tel" id="phone" pattern="[7-8]{1}[0-9]{10}" placeholder="+7 (___) ___-__-__">
-            <button type="button" onclick="login(event)">Войти</button>
+    <div class="profile-page-wrapper">
+    
+   <header class="header">
+        <div class="container header-top">
+            <div class="logo">
+                <img src="img/icons.png" alt=""> 
+                <h2><a href="index.html">Fresh Foods</a></h2>
+            </div>
+            <div class="header-actions">
+                <div class="info-row">
+                    <span>Ваш номер:</span>
+                    <b id="user-phone-display">Загрузка...</b>
+                </div>
+            </div>
         </div>
+        <nav class="main-nav container">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="cart.html">Basket</a></li>
+            </ul>
+        </nav>
+    </header>
+
+        <div class="profile-content-container">   
+            <h2 class="section-title">Personal Account</h2>
+
+            <div class="profile-card">
+                <div class="orders-section">
+                    <h3>История заказов</h3>
+                    <ul id="orders-list"><li>Загрузка...</li></ul>
+                </div>
+
+                <div class="promo-section">
+                    <h3>Ваши промокоды</h3>
+                    <ul id="promo-list"><li>Загрузка...</li></ul>
+                </div>
+            </div>
+
+            
+
+            <div id="nav-reg-item">
+                <a href="registr.html" class="my-button">Зарегистрироваться</a>
+            </div>
+        </div>
+
     </div>
+</div>
 
     <script src="script.js"></script>
 </body>

@@ -683,36 +683,66 @@ a {
     font-size: 12px;
 }
 
-.auth-card {
-    background: white;
-    padding: 40px;
-    border-radius: 16px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-    width: 100%;
-    max-width: 350px;
-    text-align: center;
-}
-
-.auth-card h2 {
-    margin-bottom: 25px;
-    color: #333;
+.auth-page {
+    background: #f4f7f6;
+    margin: 0;
 }
 
 .auth-wrapper {
     display: flex;
-    justify-content: center; /* Центрирует по горизонтали */
-    align-items: center;     /* Центрирует по вертикали */
-    min-height: 100vh;       /* Высота на весь экран */
-    width: 100%;             /* Ширина на весь экран */
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh; /* Центрируем по вертикали */
 }
 
 .auth-card {
     background: white;
     padding: 40px;
-    border-radius: 16px;
+    border-radius: 20px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-    width: 350px;
     text-align: center;
+    width: 100%;
+    max-width: 350px;
+}
+
+.reg-button {
+    width: 100%;
+    padding: 12px;
+    background: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: 0.3s;
+}
+
+.reg-button:hover {
+    background: #45a049;
+}
+
+#phone {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+
+.my-button {
+    
+    width: 100%;
+    padding: 12px;
+    background: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: 0.3s;
+    margin-top: 60px;
 }
 
 /* Поле ввода */
@@ -741,6 +771,90 @@ button {
 
 button:hover {
     background-color: #219150;
+}
+
+/* Основной контейнер, который занимает всю высоту экрана */
+.profile-content-container {
+    display: flex;
+    flex-direction: column; 
+    align-items: center;    
+    justify-content: center;
+    min-height: 80vh;       
+    padding: 20px;
+    width: 100%;
+}
+
+/* Карточка профиля */
+.profile-card {
+    width: 100%;
+    max-width: 500px; /* Ограничиваем ширину, чтобы не растягивалось */
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+/* Секции внутри карточки */
+.orders-section, .promo-section {
+    text-align: left;  
+    margin-bottom: 20px;
+}
+
+/* Чтобы списки тоже смотрелись аккуратно */
+ul {
+    padding-left: 20px;
+}
+
+/* Главная обертка вместо body */
+.profile-page-wrapper {
+    font-family: 'Montserrat', sans-serif;
+    background: #f9f9f9;
+    min-height: 100vh;
+}
+
+/* Навигация */
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+/* Карточка профиля */
+
+#user-phone-display {
+    color: var(--dark-green);
+    font-size: 20px;
+}
+
+.cards {
+  display: flex;
+  gap: 20px; /* Расстояние между блоками */
+  padding: 20px;
+}
+
+.card {
+  width: 200px;
+  height: 100px;
+  background-color: #3498db; /* Базовый цвет */
+  border: 2px solid #000;
+  transition: background-color 0.3s ease; /* Плавный переход */
+  cursor: pointer;
+}
+
+/* Эффект затемнения при наведении */
+.card:hover {
+  background-color: #2980b9; /* Более темный оттенок */
 }
 
 /* Адаптивность для мобилок */
