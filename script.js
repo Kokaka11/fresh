@@ -1,29 +1,3 @@
-
-async function addToCartServer(productId) {
-    const userId = localStorage.getItem('userId'); // Получаем ID вошедшего пользователя
-    
-    if (!userId) {
-        alert("Пожалуйста, сначала авторизуйтесь!");
-        window.location.href = 'auth.html';
-        return;
-    }
-
-    try {
-        const response = await fetch('http://localhost:3000/api/cart/add', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ userId, productId, quantity: 1 })
-        });
-
-        if (response.ok) {
-            alert("Товар добавлен в корзину!");
-            // Тут можно вызвать функцию обновления суммы в шапке
-        }
-    } catch (err) {
-        console.error("Ошибка при добавлении:", err);
-    }
-}
-
 // 1. Проверяем, вошел ли пользователь при загрузке страницы профиля
 document.addEventListener('DOMContentLoaded', () => {
     initProfile();
@@ -135,17 +109,6 @@ app.get('/api/orders/:userId', async (req, res) => {
     }
 });
 
-// Получение всех активных промокодов
-app.get('/api/promos', async (req, res) => {
-    try {
-        const promos = await pool.query('SELECT * FROM promo_codes WHERE is_active = true');
-        res.json(promos.rows);
-    } catch (err) {
-        res.status(500).send('Ошибка сервера');
-    }
-});
-
-
 // 4. Функция выхода
 function logout() {
     localStorage.removeItem('userId');
@@ -166,21 +129,6 @@ async function loadCart() {
         </div>
     `).join('');
 }
-
-app.post('/api/auth', async (req, res) => {
-    const { phone } = req.body;
-    try {
-        // Проверяем, есть ли такой пользователь, если нет - создаем
-        let user = await pool.query('SELECT * FROM users WHERE phone = $1', [phone]);
-        if (user.rows.length === 0) {
-            user = await pool.query('INSERT INTO users (phone) VALUES ($1) RETURNING *', [phone]);
-        }
-        res.json(user.rows[0]);
-    } catch (err) {
-        console.error(err);
-        res.status(500).send('Ошибка сервера');
-    }
-});
 loadCart(); // Загружаем при открытии страницы
 
 

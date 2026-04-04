@@ -19,6 +19,47 @@ const pool = new Pool({
 });
 // подключении к бд 5432
 
+app.post('/api/auth', async (req, res) => {
+    const { phone } = req.body;
+    try {
+        // Проверяем, есть ли такой пользователь, если нет - создаем
+        let user = await pool.query('SELECT * FROM users WHERE phone = $1', [phone]);
+        if (user.rows.length === 0) {
+            user = await pool.query('INSERT INTO users (phone) VALUES ($1) RETURNING *', [phone]);
+        }
+        res.json(user.rows[0]);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Ошибка сервера');
+    }
+});
+
+
+// Получение всех активных промокодов
+app.get('/api/promos', async (req, res) => {
+    try {
+        const promos = await pool.query('SELECT * FROM promo_codes WHERE is_active = true');
+        res.json(promos.rows);
+    } catch (err) {
+        res.status(500).send('Ошибка сервера');
+    }
+});
+
+
+app.use(cors()); 
+app.use(express.json());
+
+// Пример роута для обновления
+app.post('/api/cart/update', (req, res) => {
+    const { userId, productId, quantity } = req.body;
+    console.log(`Обновление для юзера ${userId}: товар ${productId}, кол-во ${quantity}`);
+    res.json({ success: true });
+});
+
+app.listen(3000, () => {
+    console.log('Сервер запущен на http://localhost:3000');
+});
+
 //авторизации (нужен для работы входа)
 app.post('/api/auth', async (req, res) => {
     let { phone } = req.body;
@@ -101,7 +142,7 @@ app.get('/api/cart/:userId', async (req, res) => {
 });
 
 
-const PORT = 3000;
-app.listen(PORT, () => {
-    console.log(`Сервер летит на http://localhost:${PORT}`);
-});
+// const PORT = 3000;
+// app.listen(PORT, () => {
+//     console.log(`Сервер летит на http://localhost:${PORT}`);
+// });
