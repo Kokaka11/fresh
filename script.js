@@ -1,134 +1,62 @@
-// 1. Проверяем, вошел ли пользователь при загрузке страницы профиля
-document.addEventListener('DOMContentLoaded', () => {
-    initProfile();
-});
-
-async function initProfile() {
-    const userId = localStorage.getItem('userId');
-    console.log("Текущий userId из памяти:", userId); // Проверка в консоли
-
-    if (!userId) {
-        document.getElementById('user-phone-display').innerText = "Не авторизован";
-        return;
-    }
-
-    try {
-        const response = await fetch(`http://localhost:3000/api/user/${userId}`);
-        
-        if (response.ok) {
-            const userData = await response.json();
-            console.log("Данные от сервера:", userData); // Проверка в консоли
-            
-            // Если в базе колонка называется phone, выводим её
-            if (userData.phone) {
-                document.getElementById('user-phone-display').innerText = userData.phone;
-            } else {
-                document.getElementById('user-phone-display').innerText = "Номер не найден";
-            }
-        } else {
-            console.error("Ошибка сервера:", response.status);
-            document.getElementById('user-phone-display').innerText = "Ошибка загрузки";
-        }
-    } catch (error) {
-        console.error("Ошибка сети:", error);
-        document.getElementById('user-phone-display').innerText = "Сервер выключен";
-    }
-}
-
-// 2. Функция входа / регистрации
-async function login(event) {
-    event.preventDefault(); // Чтобы страница не перезагрузилась просто так
-
-    const phoneInput = document.getElementById('phone').value;
-    const errorDiv = document.getElementById('error-message');
-
-    if (!phoneInput) return;
-
-    try {
-        const response = await fetch('http://localhost:3000/api/auth', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ phone: phoneInput })
-        });
-
-        if (response.ok) {
-            const data = await response.json();
-            
-            // 1. Сохраняем ID, чтобы профиль знал, кого показывать
-            localStorage.setItem('userId', data.id);
-            
-            // 2. ПЕРЕХОДИМ В ПРОФИЛЬ
-            window.location.href = 'index.html';
-        } else {
-            errorDiv.innerText = "Ошибка при входе. Попробуйте еще раз.";
-        }
-    } catch (error) {
-        console.error("Ошибка:", error);
-        errorDiv.innerText = "Сервер не отвечает. Проверь, запущен ли Node.js";
-    }
-}
-
 document.addEventListener('DOMContentLoaded', () => {
     const userId = localStorage.getItem('userId');
-    const regButton = document.getElementById('nav-reg-item');
-
-    if (userId) {
-        // Если пользователь вошел, скрываем кнопку регистрации
-        if (regButton) {
-            regButton.style.display = 'none';
-        }
-    } else {
-        // Если не вошел, показываем
-        if (regButton) {
-            regButton.style.display = 'block';
-        }
-    }
-});
-
-// 3. Функция загрузки данных (номера)
-async function loadUserData(id) {
-    try {
-        // Обрати внимание: запрос написан строго в одну строчку
-        const res = await fetch(`http://localhost:3000/api/user/${id}`);
-        if (res.ok) {
-            const data = await res.json();
-            document.getElementById('user-phone').innerText = data.phone;
-        }
-    } catch (error) {
-        console.error('Ошибка при получении профиля:', error);
-    }
-}
-
-// Получение истории заказов пользователя
-app.get('/api/orders/:userId', async (req, res) => {
-    try {
-        const orders = await pool.query('SELECT * FROM orders WHERE user_id = $1 ORDER BY order_date DESC', [req.params.userId]);
-        res.json(orders.rows);
-    } catch (err) {
-        res.status(500).send('Ошибка сервера');
-    }
-});
-
-// 4. Функция выхода
-function logout() {
-    localStorage.removeItem('userId');
-    window.location.href = 'index.html'; // При выходе сразу на главную
-}
-
-
-
-async function loadCart() {
-    const userId = localStorage.getItem('userId');
-    const res = await fetch(`http://localhost:3000/api/cart/${userId}`);
-    const items = await res.json();
     
-    const container = document.getElementById('cart-list');
-    container.innerHTML = items.map(item => `
-        <div class="cart-item">
-            <p>${item.name} - ${item.quantity} шт. по ${item.price}₽</p>
-        </div>
-    `).join('');
+    // Скрываем регистрацию
+    const regButton = document.getElementById('nav-reg-item');
+    if (regButton && userId) regButton.style.display = 'none';
+
+    // Номер в шапке
+    if (userId && document.getElementById('user-phone-display')) {
+        updateHeaderPhone(userId);
+    }
+
+    // Загрузка данных страниц
+    if (document.getElementById('orders-list')) loadProfileData(userId);
+    if (document.getElementById('cart-items-container')) loadBasket(userId);
+});
+
+async function updateHeaderPhone(id) {
+    try {
+        const res = await fetch(`http://localhost:3000/api/user/${id}`);
+        const data = await res.json();
+        document.getElementById('user-phone-display').innerText = data.phone;
+    } catch (e) { console.error("Ошибка связи с сервером"); }
 }
-loadCart(); // Загружаем при открытии страницы
 
+async function loadProfileData(userId) {
+    if (!userId) return;
+    try {
+        // Заказы
+        const ordersRes = await fetch(`http://localhost:3000/api/orders/${userId}`);
+        const orders = await ordersRes.json();
+        document.getElementById('orders-list').innerHTML = orders.length > 0 
+            ? orders.map(o => `<li>Заказ №${o.id} — ${o.total_amount} ₽</li>`).join('')
+            : '<li>Заказов пока нет</li>';
 
+        // Промокоды
+        const promoRes = await fetch(`http://localhost:3000/api/promos`);
+        const promos = await promoRes.json();
+        document.getElementById('promo-list').innerHTML = promos.length > 0
+            ? promos.map(p => `<li>${p.code} — скидка ${p.discount}%</li>`).join('')
+            : '<li>Нет активных промокодов</li>';
+    } catch (e) { console.error("Ошибка профиля", e); }
+}
+
+async function loadBasket(userId) {
+    if (!userId) return;
+    try {
+        const res = await fetch(`http://localhost:3000/api/cart/${userId}`);
+        const items = await res.json();
+        const container = document.getElementById('cart-items-container');
+        let total = 0;
+
+        container.innerHTML = items.length > 0 
+            ? items.map(item => {
+                total += item.price * item.quantity;
+                return `<div class="cart-item">...</div>`; // ваш HTML шаблона
+              }).join('')
+            : "<p>Корзина пуста</p>";
+
+        document.getElementById('final-price').innerText = `${total} ₽`;
+    } catch (e) { console.error("Ошибка корзины", e); }
+}

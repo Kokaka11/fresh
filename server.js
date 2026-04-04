@@ -1,14 +1,10 @@
-// подключении к бд
 const express = require('express');
 const { Pool } = require('pg');
 const cors = require('cors');
-const bodyParser = require('body-parser');
-
 const app = express();
 
 app.use(cors());
-app.use(bodyParser.json());
-app.use(express.static('public'));
+app.use(express.json());
 
 const pool = new Pool({
     user: 'postgres',
@@ -17,132 +13,91 @@ const pool = new Pool({
     password: '2613346ko', 
     port: 5432,
 });
-// подключении к бд 5432
 
+// Авторизация[cite: 15]
 app.post('/api/auth', async (req, res) => {
     const { phone } = req.body;
     try {
-        // Проверяем, есть ли такой пользователь, если нет - создаем
         let user = await pool.query('SELECT * FROM users WHERE phone = $1', [phone]);
         if (user.rows.length === 0) {
             user = await pool.query('INSERT INTO users (phone) VALUES ($1) RETURNING *', [phone]);
         }
         res.json(user.rows[0]);
     } catch (err) {
-        console.error(err);
         res.status(500).send('Ошибка сервера');
     }
 });
 
-
-// Получение всех активных промокодов
-app.get('/api/promos', async (req, res) => {
-    try {
-        const promos = await pool.query('SELECT * FROM promo_codes WHERE is_active = true');
-        res.json(promos.rows);
-    } catch (err) {
-        res.status(500).send('Ошибка сервера');
-    }
-});
-
-
-app.use(cors()); 
-app.use(express.json());
-
-// Пример роута для обновления
-app.post('/api/cart/update', (req, res) => {
-    const { userId, productId, quantity } = req.body;
-    console.log(`Обновление для юзера ${userId}: товар ${productId}, кол-во ${quantity}`);
-    res.json({ success: true });
-});
-
-app.listen(3000, () => {
-    console.log('Сервер запущен на http://localhost:3000');
-});
-
-//авторизации (нужен для работы входа)
-app.post('/api/auth', async (req, res) => {
-    let { phone } = req.body;
-    
-    if (!phone) {
-        return res.status(400).send('Номер телефона обязателен');
-    }
-    phone = String(phone).trim(); 
-    
-    try {
-        // Добавь консоль-лог, чтобы видеть, что происходит в терминале VS Code
-        console.log("Попытка входа с номером:", phone);
-        
-        const checkUser = await pool.query('SELECT * FROM users WHERE phone = $1', [phone]);
-
-        if (checkUser.rows.length > 0) {
-            console.log("Пользователь найден, ID:", checkUser.rows[0].id);
-            res.json(checkUser.rows[0]);
-        } else {
-            console.log("Пользователь не найден, создаем нового.");
-            const newUser = await pool.query(
-                'INSERT INTO users (phone) VALUES ($1) RETURNING *', 
-                [phone]
-            );
-            res.json(newUser.rows[0]);
-        }
-    } catch (err) {
-        console.error("Ошибка базы данных:", err);
-        res.status(500).send('Ошибка сервера');
-    }
-});
-
-// создание и проверка номера телефона
-app.post('/api/auth', async (req, res) => {
-    const { phone } = req.body;
-    try {
-
-        const result = await pool.query('SELECT * FROM users WHERE phone = $1', [phone]);
-        
-        if (result.rows.length > 0) {
-
-            res.json(result.rows[0]);
-        } else {
-
-            const newUser = await pool.query(
-                'INSERT INTO users (phone) VALUES ($1) RETURNING *', 
-                [phone]
-            );
-            res.json(newUser.rows[0]);
-        }
-    } catch (err) {
-        res.status(500).send('Ошибка сервера');
-    }
-});
-
-// Получение данных пользователя по ID
+// Получение данных пользователя[cite: 15]
 app.get('/api/user/:id', async (req, res) => {
     try {
-        const { id } = req.params;
-        const result = await pool.query('SELECT phone FROM users WHERE id = $1', [id]);
-        
-        if (result.rows.length > 0) {
-            res.json(result.rows[0]);
-        } else {
-            res.status(404).send('Пользователь не найден');
-        }
+        const result = await pool.query('SELECT phone FROM users WHERE id = $1', [req.params.id]);
+        if (result.rows.length > 0) res.json(result.rows[0]);
+        else res.status(404).send('Пользователь не найден');
     } catch (err) {
         res.status(500).send('Ошибка сервера');
     }
 });
 
-
-app.get('/api/cart/:userId', async (req, res) => {
-    const { userId } = req.params;
-    const result = await pool.query(
-        'SELECT p.name, p.price, c.quantity FROM cart_items c JOIN products p ON c.product_id = p.id WHERE c.user_id = $1',
-        [userId]
-    );
-    res.json(result.rows);
+// История заказов[cite: 15]
+app.get('/api/orders/:userId', async (req, res) => {
+    try {
+        const orders = await pool.query(
+            'SELECT * FROM orders WHERE user_id = $1 ORDER BY created_at DESC', 
+            [req.params.userId]
+        );
+        res.json(orders.rows);
+    } catch (err) {
+        res.status(500).json({ error: 'Ошибка сервера' });
+    }
 });
 
+// Получение корзины[cite: 15]
+app.get('/api/cart/:userId', async (req, res) => {
+    try {
+        const items = await pool.query('SELECT * FROM cart WHERE user_id = $1', [req.params.userId]);
+        res.json(items.rows);
+    } catch (err) {
+    console.error(err); 
+    res.status(500).json({ error: 'Ошибка сервера' }); 
+}
+});
 
-// const PORT = 3000;
-// app.listen(PORT, () => {
-//     console.log(`Сервер летит на http://localhost:${PORT}`);
-// });
+// Добавление/Обновление корзины[cite: 15]
+app.post('/api/cart', async (req, res) => {
+    const { userId, name, price, quantity } = req.body;
+    try {
+        await pool.query(
+            `INSERT INTO cart (user_id, product_name, price, quantity) 
+             VALUES ($1, $2, $3, $4) 
+             ON CONFLICT (user_id, product_name) DO UPDATE SET quantity = cart.quantity + EXCLUDED.quantity`,
+            [userId, name, price, quantity]
+        );
+        res.json({ success: true });
+    } catch (err) {
+        res.status(500).send('Ошибка сервера');
+    }
+});
+
+// Удаление из корзины[cite: 15]
+app.delete('/api/cart/:userId/:itemName', async (req, res) => {
+    try {
+        await pool.query('DELETE FROM cart WHERE user_id = $1 AND product_name = $2', 
+            [req.params.userId, req.params.itemName]);
+        res.json({ success: true });
+    } catch (err) {
+        res.status(500).send('Ошибка сервера');
+    }
+});
+
+// Получение списка активных промокодов
+app.get('/api/promos', async (req, res) => {
+    try {
+        const promos = await pool.query('SELECT * FROM promos');
+        res.json(promos.rows);
+    } catch (err) {
+        res.status(500).json({ error: 'Ошибка загрузки промокодов' });
+    }
+});
+
+app.listen(3000, () => console.log('Сервер запущен на http://localhost:3000'));

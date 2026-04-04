@@ -33,25 +33,9 @@
     <section class="cart-section">
     <div class="container">
         <h2>Ваша корзина</h2>
-        
         <div class="cart-container">
-            <!-- Список товаров -->
-            <div class="cart-items" id="cart-items-container">
-                <!-- Товар 1 (пример) -->
-                <div class="cart-item">
-                    <img src="img/apple.png" alt="Товар" class="item-img">
-                    <div class="item-details">
-                        <h3>Свежие овощи</h3>
-                        <p class="item-price">500 ₽</p>
-                    </div>
-                    <div class="item-controls">
-                        <button class="qty-btn">-</button>
-                        <span class="qty-num">1</span>
-                        <button class="qty-btn">+</button>
-                    </div>
-                    <button class="delete-btn">&times;</button>
-                </div>
-            </div>
+            <!-- Список товаров заполняется через JS (loadCart) -->
+            <div class="cart-items" id="cart-items-container"></div>
 
             <!-- Итоговый чек -->
             <div class="cart-summary">
@@ -60,16 +44,12 @@
                     <span>Товары:</span>
                     <span id="total-items-price">0 ₽</span>
                 </div>
-                <div class="summary-row">
-                    <span>Доставка:</span>
-                    <span>Бесплатно</span>
-                </div>
                 <hr>
                 <div class="summary-row total">
                     <span>К оплате:</span>
                     <strong id="final-price">0 ₽</strong>
                 </div>
-                <button class="checkout-btn">Оформить заказ</button>
+                <button class="checkout-btn" onclick="createOrder()">Оформить заказ</button>
             </div>
         </div>
     </div>
