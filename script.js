@@ -84,7 +84,7 @@ async function login(event) {
             localStorage.setItem('userId', data.id);
             
             // 2. ПЕРЕХОДИМ В ПРОФИЛЬ
-            window.location.href = 'profile.html';
+            window.location.href = 'index.html';
         } else {
             errorDiv.innerText = "Ошибка при входе. Попробуйте еще раз.";
         }
