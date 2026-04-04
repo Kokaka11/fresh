@@ -15,7 +15,7 @@ const pool = new Pool({
     host: 'localhost',
     database: 'fresh', 
     password: '2613346ko', 
-    port: 3000,
+    port: 5432,
 });
 // подключении к бд 5432
 
