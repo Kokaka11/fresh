@@ -15,9 +15,9 @@ const pool = new Pool({
     host: 'localhost',
     database: 'fresh', 
     password: '2613346ko', 
-    port: 5432,
+    port: 3000,
 });
-// подключении к бд
+// подключении к бд 5432
 
 //авторизации (нужен для работы входа)
 app.post('/api/auth', async (req, res) => {
@@ -89,7 +89,6 @@ app.get('/api/user/:id', async (req, res) => {
         res.status(500).send('Ошибка сервера');
     }
 });
-
 
 
 app.get('/api/cart/:userId', async (req, res) => {
