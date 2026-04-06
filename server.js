@@ -100,4 +100,28 @@ app.get('/api/promos', async (req, res) => {
     }
 });
 
+// Оформление заказа
+app.post('/api/orders', async (req, res) => {
+    const { userId, totalAmount } = req.body;
+    try {
+        await pool.query('BEGIN'); // Начало транзакции
+
+        // 1. Создаем запись в таблице заказов
+        await pool.query(
+            'INSERT INTO orders (user_id, total_amount) VALUES ($1, $2) RETURNING *',
+            [userId, totalAmount]
+        );
+
+        // 2. Очищаем корзину пользователя
+        await pool.query('DELETE FROM cart WHERE user_id = $1', [userId]);
+
+        await pool.query('COMMIT'); // Фиксируем изменения
+        res.json({ success: true });
+    } catch (err) {
+        await pool.query('ROLLBACK'); // Откат при ошибке
+        console.error(err);
+        res.status(500).json({ error: 'Ошибка оформления заказа' });
+    }
+});
+
 app.listen(3000, () => console.log('Сервер запущен на http://localhost:3000'));

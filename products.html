@@ -3,165 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Products - Fresh Foods</title>
-   
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"> 
+    <title>Fresh Foods</title>
+    <link rel="icon" href="img/icons.png">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
-    <header class="header">
-        <div class="container nav-wrapper">
-             <div class="logo">
+   <header class="header">
+        <div class="container header-top">
+            <div class="logo">
                 <img src="img/icons.png" alt=""> 
-                <h2><a href="#">Fresh Foods</a></h2>
+                <h2><a href="index.html">Fresh Foods</a></h2>
             </div>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="products.html" class="active">Products</a></li>
-            </ul>
+            <div class="header-actions">
+                <div class="info-row">
+                    <span>Ваш номер:</span>
+                    <b id="user-phone-display">Загрузка...</b>
+                </div>
+            </div>
         </div>
+        <nav class="main-nav container">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+            </ul>
+        </nav>
     </header>
 
     <main class="container product-page-padding">
         <h1 class="section-title">Наша органическая коллекция</h1>
         
-        <div class="product-grid">
-            
-            <div class="product-card">
-                <div class="badge sale">Sale</div>
-                <div class="img-box"><img src="img/orange.png" alt="Oranges"></div>
-                <p class="category-label">Fruits</p>
-                <h3>Oranges - 1kg</h3>
-                <div class="price">120₽ <span class="old">170₽</span></div>
-                
-            </div>
-
-            <div class="product-card">
-                <div class="img-box"><img src="img/chicken.png" alt="Chicken"></div>
-                <p class="category-label">Meat</p>
-                <h3>Chicken - 1kg</h3>
-                <div class="price">599₽</div>
-            </div>
-
-            <div class="product-card">
-                <div class="badge new">New</div>
-                <div class="img-box"><img src="img/egg.png" alt="Eggs"></div>
-                <p class="category-label">Dairy</p>
-                <h3>Eggs - 1 Dozen</h3>
-                <div class="price">100₽</div>
-            </div>
-
-            <div class="product-card">
-                <div class="img-box"><img src="img/potato.png" alt="Potatoes"></div>
-                <p class="category-label">Vegetables</p>
-                <h3>Potatoes - 1kg</h3>
-                <div class="price">89,99₽</div>
-                
-            </div>
-
-            <div class="product-card">
-                <div class="img-box"><img src="img/broccoli.png" alt="Broccoli"></div>
-                <p class="category-label">Vegetables</p>
-                <h3>Fresh Broccoli - 500g</h3>
-                <div class="price">150₽</div>
-               
-            </div>
-
-            <div class="product-card">
-                <div class="badge sale">Sale</div>
-                <div class="img-box"><img src="img/Salmon.png" alt="Salmon"></div>
-                <p class="category-label">Seafood</p>
-                <h3>Salmon Fillet - 300g</h3>
-                <div class="price">850₽ <span class="old">1100₽</span></div>
-            </div>
-
-            <div class="product-card">
-                <div class="img-box"><img src="img/Milk.png" alt="Milk"></div>
-                <p class="category-label">Dairy</p>
-                <h3>Organic Milk - 1L</h3>
-                <div class="price">115₽</div>
-                
-            </div>
-
-            <div class="product-card">
-                <div class="badge new">New</div>
-                <div class="img-box"><img src="img/apple.png" alt="Apples"></div>
-                <p class="category-label">Fruits</p>
-                <h3>Red Apples - 1kg</h3>
-                <div class="price">140₽</div>
-                
-            </div>
-
-            <div class="product-card">
-                <div class="badge sale">Sale</div>
-                <div class="img-box"><img src="img/Salmon.png" alt="Salmon"></div>
-                <p class="category-label">Seafood</p>
-                <h3>Salmon Fillet - 300g</h3>
-                <div class="price">850₽ <span class="old">1100₽</span></div>
-               
-            </div>
-
-            <div class="product-card">
-                <div class="img-box"><img src="img/Milk.png" alt="Milk"></div>
-                <p class="category-label">Dairy</p>
-                <h3>Organic Milk - 1L</h3>
-                <div class="price">115₽</div>
-               
-            </div>
-
-            <div class="product-card">
-                <div class="badge new">New</div>
-                <div class="img-box"><img src="img/apple.png" alt="Apples"></div>
-                <p class="category-label">Fruits</p>
-                <h3>Red Apples - 1kg</h3>
-                <div class="price">140₽</div>
-               
-            </div>
-
-            <div class="product-card">
-                <div class="badge sale">Sale</div>
-                <div class="img-box"><img src="img/Salmon.png" alt="Salmon"></div>
-                <p class="category-label">Seafood</p>
-                <h3>Salmon Fillet - 300g</h3>
-                <div class="price">850₽ <span class="old">1100₽</span></div>
-            </div>
-
-            <div class="product-card">
-                <div class="img-box"><img src="img/Milk.png" alt="Milk"></div>
-                <p class="category-label">Dairy</p>
-                <h3>Organic Milk - 1L</h3>
-                <div class="price">115₽</div>
-               
-            </div>
-
-            <div class="product-card">
-                <div class="badge new">New</div>
-                <div class="img-box"><img src="img/apple.png" alt="Apples"></div>
-                <p class="category-label">Fruits</p>
-                <h3>Red Apples - 1kg</h3>
-                <div class="price">140₽</div>
-               
-            </div>
-
-            <div class="product-card">
-                <div class="badge sale">Sale</div>
-                <div class="img-box"><img src="img/Salmon.png" alt="Salmon"></div>
-                <p class="category-label">Seafood</p>
-                <h3>Salmon Fillet - 300g</h3>
-                <div class="price">850₽ <span class="old">1100₽</span></div>
-                
-            </div>
-
-            <div class="product-card">
-                <div class="img-box"><img src="img/Milk.png" alt="Milk"></div>
-                <p class="category-label">Dairy</p>
-                <h3>Organic Milk - 1L</h3>
-                <div class="price">115₽</div>
-            </div>
-
-
+       <div class="product-grid">
+        <!-- Oranges -->
+        <div class="product-card">
+            <div class="badge sale">Sale</div>
+            <div class="img-box"><img src="img/orange.png" alt="Oranges"></div>
+            <p class="category-label">Fruits</p>
+            <h3>Oranges - 1kg</h3>
+            <div class="price">120₽ <span class="old">170₽</span></div>
+            <button class="add-to-cart-btn" onclick="addToBasket('Oranges - 1kg', 120)">В корзину</button>
         </div>
-    </main>
+
+        <!-- Chicken -->
+        <div class="product-card">
+            <div class="img-box"><img src="img/chicken.png" alt="Chicken"></div>
+            <p class="category-label">Meat</p>
+            <h3>Chicken - 1kg</h3>
+            <div class="price">599₽</div>
+            <button class="add-to-cart-btn" onclick="addToBasket('Chicken - 1kg', 599)">В корзину</button>
+        </div>
+
+        <!-- Eggs -->
+        <div class="product-card">
+            <div class="badge new">New</div>
+            <div class="img-box"><img src="img/egg.png" alt="Eggs"></div>
+            <p class="category-label">Dairy</p>
+            <h3>Eggs - 1 Dozen</h3>
+            <div class="price">100₽</div>
+            <button class="add-to-cart-btn" onclick="addToBasket('Eggs - 1 Dozen', 100)">В корзину</button>
+        </div>
+
+        <!-- Potatoes -->
+        <div class="product-card">
+            <div class="img-box"><img src="img/potato.png" alt="Potatoes"></div>
+            <p class="category-label">Vegetables</p>
+            <h3>Potatoes - 1kg</h3>
+            <div class="price">89₽</div>
+            <button class="add-to-cart-btn" onclick="addToBasket('Potatoes - 1kg', 89)">В корзину</button>
+        </div>
+
+        <!-- Broccoli -->
+        <div class="product-card">
+            <div class="img-box"><img src="img/broccoli.png" alt="Broccoli"></div>
+            <p class="category-label">Vegetables</p>
+            <h3>Fresh Broccoli - 500g</h3>
+            <div class="price">150₽</div>
+            <button class="add-to-cart-btn" onclick="addToBasket('Fresh Broccoli - 500g', 150)">В корзину</button>
+        </div>
+
+        <!-- Salmon -->
+        <div class="product-card">
+            <div class="badge sale">Sale</div>
+            <div class="img-box"><img src="img/Salmon.png" alt="Salmon"></div>
+            <p class="category-label">Seafood</p>
+            <h3>Salmon Fillet - 300g</h3>
+            <div class="price">850₽ <span class="old">1100₽</span></div>
+            <button class="add-to-cart-btn" onclick="addToBasket('Salmon Fillet - 300g', 850)">В корзину</button>
+        </div>
+
+        <!-- Milk -->
+        <div class="product-card">
+            <div class="img-box"><img src="img/Milk.png" alt="Milk"></div>
+            <p class="category-label">Dairy</p>
+            <h3>Organic Milk - 1L</h3>
+            <div class="price">115₽</div>
+            <button class="add-to-cart-btn" onclick="addToBasket('Organic Milk - 1L', 115)">В корзину</button>
+        </div>
+
+        <!-- Apples -->
+        <div class="product-card">
+            <div class="badge new">New</div>
+            <div class="img-box"><img src="img/apple.png" alt="Apples"></div>
+            <p class="category-label">Fruits</p>
+            <h3>Red Apples - 1kg</h3>
+            <div class="price">140₽</div>
+            <button class="add-to-cart-btn" onclick="addToBasket('Red Apples - 1kg', 140)">В корзину</button>
+        </div>
+    </div>
+</main>
+<script src="script.js"></script>
 </body>
 </html>
